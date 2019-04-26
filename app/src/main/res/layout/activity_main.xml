@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   tools:context=".MainActivity">
@@ -10,7 +8,33 @@
   <ListView
     android:id="@+id/main_lv"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
+    android:layout_height="match_parent"
+    android:layout_above="@+id/main_linear"
+    tools:listitem="@layout/activity_main_lv_item"/>
 
+  <LinearLayout
+    android:id="@+id/main_linear"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_alignParentBottom="true">
 
-</LinearLayout>
+    <Button
+      android:id="@+id/look_up_guide_bt"
+      android:layout_width="0dp"
+      android:layout_weight="1"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="@string/user_guide"/>
+
+    <Button
+      android:id="@+id/create_music_ablum_bt"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:gravity="center"
+      android:text="@string/create"/>
+
+  </LinearLayout>
+
+</RelativeLayout>
