@@ -19,7 +19,7 @@ public class GuideActivity extends AppCompatActivity {
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_guide_layout);
-    mWebView = findViewById(R.id.guide_webview);
+    mWebView = (WebView) findViewById(R.id.guide_webview);
     mWebView.setWebViewClient(new WebViewClient());
     mWebView.loadUrl("file:///android_asset/guide.html");
   }

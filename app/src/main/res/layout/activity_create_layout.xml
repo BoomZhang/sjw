@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <LinearLayout
+    android:id="@+id/linear"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true">
+
+    <Button
+      android:id="@+id/look_for_picture_bt"
+      android:text="@string/look_for_pictures"
+      android:layout_width="0dp"
+      android:layout_weight="1"
+      android:layout_height="wrap_content"/>
+
+    <Button
+      android:id="@+id/choose_music_bt"
+      android:text="@string/choose_background_music"
+      android:layout_width="0dp"
+      android:layout_weight="1"
+      android:layout_height="wrap_content" />
+
+    <Button
+      android:id="@+id/save_bt"
+      android:text="@string/save"
+      android:layout_width="0dp"
+      android:layout_weight="1"
+      android:layout_height="wrap_content" />
+
+  </LinearLayout>
+
+  <android.support.v4.widget.NestedScrollView
+    android:layout_above="@+id/linear"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <com.example.sjw.OtherGridView
+        android:id="@+id/pictures_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"
+        tools:listitem="@layout/activity_create_gridview_item"/>
+
+      <TextView
+        android:id="@+id/choosen_music"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/pictures_gridview"
+        tools:text="已选择的天下潮作为背景音乐"/>
+
+    </RelativeLayout>
+
+  </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

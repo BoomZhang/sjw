@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   }
 
   private void initView() {
-    mLv = findViewById(R.id.main_lv);
+    mLv = (ListView) findViewById(R.id.main_lv);
     mLv.setAdapter(createAdapter());
     mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
       }
     });
-    mBtGuide = findViewById(R.id.look_up_guide_bt);
+    mBtGuide = (Button) findViewById(R.id.look_up_guide_bt);
     mBtGuide.setOnClickListener(this);
-    mBtCreate = findViewById(R.id.create_music_ablum_bt);
+    mBtCreate = (Button) findViewById(R.id.create_music_ablum_bt);
     mBtCreate.setOnClickListener(this);
   }
 
@@ -52,10 +52,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     if(v.getId() == R.id.look_up_guide_bt){
       Intent intent = new Intent(MainActivity.this,GuideActivity.class);
       startActivity(intent);
-    }else if(v.getId() == R.id.create_music_ablum_bt){
-
+    }else if(v.getId() == R.id.create_music_ablum_bt) {
+      Intent intent1 = new Intent(MainActivity.this, CreateActivity.class);
+      startActivity(intent1);
     }
-
   }
 
 }
