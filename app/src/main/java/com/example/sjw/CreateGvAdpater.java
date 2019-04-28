@@ -85,7 +85,7 @@ public class CreateGvAdpater extends BaseAdapter {
     }
   }
 
-  public class MyTask extends AsyncTask<String,Integer,Bitmap>{
+  public static class MyTask extends AsyncTask<String,Integer,Bitmap>{
 
     private ImageView mIv;
 

@@ -1,14 +1,16 @@
 package com.example.sjw;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -16,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   private ListView mLv;
   private Button mBtGuide;
   private Button mBtCreate;
-  private List<MainLvBean> data;
+  private List<ViBean> data;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +27,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     initView();
   }
 
+  @Override
+  protected void onResume() {
+    super.onResume();
+    mLv.setAdapter(createAdapter());
+  }
+
   private void initView() {
     mLv = (ListView) findViewById(R.id.main_lv);
     mLv.setAdapter(createAdapter());
     mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Log.i("sjw",data.get(position).name);
+        Log.i("sjw",data.get(position).backMusicID+"");
       }
     });
     mBtGuide = (Button) findViewById(R.id.look_up_guide_bt);
@@ -41,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   }
 
   private BaseAdapter createAdapter(){
-    data = new ArrayList<MainLvBean>();
+    data = createData();
     MainLvAdapter adapter = new MainLvAdapter(this,data);
     return adapter;
   }
@@ -57,5 +66,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
       startActivity(intent1);
     }
   }
+
+  private List<ViBean> createData(){
+    SQLiteDatabase db = DbManger.getIntance(this).getWritableDatabase();
+    String all = "select * from vi";
+    Cursor cursor =  DbManger.selectSQL(db,all,null);
+    return DbManger.toList(cursor);
+  }
+
 
 }

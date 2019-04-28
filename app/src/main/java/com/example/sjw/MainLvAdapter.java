@@ -15,10 +15,10 @@ import java.util.List;
  */
 public class MainLvAdapter extends BaseAdapter {
 
-  private List<MainLvBean> data;
+  private List<ViBean> data;
   private Context context;
 
-  public MainLvAdapter(Context context, List<MainLvBean> data){
+  public MainLvAdapter(Context context, List<ViBean> data){
     this.data = data;
     this.context = context;
   }
@@ -41,7 +41,7 @@ public class MainLvAdapter extends BaseAdapter {
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     ViewHolder viewHolder;
-    MainLvBean bean = data.get(position);
+    ViBean bean = data.get(position);
 
     if(convertView == null){
       convertView = LayoutInflater.from(context).inflate(R.layout.activity_main_lv_item,null);
@@ -51,8 +51,8 @@ public class MainLvAdapter extends BaseAdapter {
       viewHolder = (ViewHolder)convertView.getTag();
     }
 
-    viewHolder.mTvTitle.setText(bean.title);
-    viewHolder.mTvDescrip.setText(bean.descrip);
+    viewHolder.mTvTitle.setText(bean.name);
+    viewHolder.mTvDescrip.setText(bean.index);
 
     return convertView;
   }

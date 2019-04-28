@@ -1,6 +1,7 @@
 package com.example.sjw;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * 创建时间：2019/4/28
@@ -28,7 +28,9 @@ public class MusicChooseActivity extends AppCompatActivity implements View.OnCli
   private MusicListAdapter adapter;
   private TextView mTvHasChoose;
   private int ID = -1;
+  private int pos = -1;
   private static boolean STARTING = false;
+
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class MusicChooseActivity extends AppCompatActivity implements View.OnCli
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mTvHasChoose.setVisibility(View.VISIBLE);
         mTvHasChoose.setText("已选择《" + MusicList.names[position]+"》");
+        pos = position;
         ID = MusicList.ids[position];
         mBtStart.setText(R.string.start);
         STARTING = false;
@@ -73,7 +76,22 @@ public class MusicChooseActivity extends AppCompatActivity implements View.OnCli
         mBtStart.setText(R.string.start);
         STARTING = false;
       }
+    }else if(v.getId() == R.id.save_bt){
+      Log.i("sjw","kkk");
+      if(ID == -1){
+        return;
+      }
+      Intent intent = new Intent(MusicChooseActivity.this,CreateActivity.class);
+      intent.putExtra("position",pos);
+      setResult(RESULT_OK,intent);
+      this.finish();
     }
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    //BackgroundMusic.getInstance(this).end();
   }
 
   public static class MusicListAdapter extends BaseAdapter {
@@ -104,9 +122,7 @@ public class MusicChooseActivity extends AppCompatActivity implements View.OnCli
       if(convertView == null){
         convertView = LayoutInflater.from(context).inflate(R.layout.activity_music_list_item,null);
       }
-
       ((TextView)(convertView.findViewById(R.id.music_name_tv))).setText(MusicList.names[position]);
-
       return convertView;
     }
   }

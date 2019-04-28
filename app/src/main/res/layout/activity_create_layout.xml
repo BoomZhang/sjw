@@ -59,6 +59,13 @@
         android:layout_below="@+id/pictures_gridview"
         tools:text="已选择的天下潮作为背景音乐"/>
 
+      <EditText
+        android:id="@+id/name_input_et"
+        android:hint="@string/input_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/choosen_music"/>
+
     </RelativeLayout>
 
   </android.support.v4.widget.NestedScrollView>
