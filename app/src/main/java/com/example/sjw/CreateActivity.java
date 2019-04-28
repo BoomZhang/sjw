@@ -4,13 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.ysq.album.activity.AlbumActivity;
 import com.ysq.album.bean.ImageBean;
 import java.util.ArrayList;
@@ -79,11 +75,11 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
   @Override
   public void onClick(View v) {
-
     if(v.getId() == R.id.look_for_picture_bt){
       picMultiSelect();
     }else if(v.getId() == R.id.choose_music_bt){
-
+      Intent intent = new Intent(CreateActivity.this,MusicChooseActivity.class);
+      startActivity(intent);
     }
 
   }

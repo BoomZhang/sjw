@@ -6,4 +6,6 @@
   <string name="choose_background_music">选择背景音乐</string>
   <string name="save">保存</string>
   <string name="picture_select_num" formatted="false">选中%d张</string>
+  <string name="start">播放</string>
+  <string name="stop">停止</string>
 </resources>
