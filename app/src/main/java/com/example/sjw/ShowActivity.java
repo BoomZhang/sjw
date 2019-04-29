@@ -1,6 +1,5 @@
 package com.example.sjw;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -27,6 +26,8 @@ public class ShowActivity extends AppCompatActivity {
   private String index;
   private int backId;
   private List<String> paths;
+  private IvAdapter adapter;
+
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,12 +40,53 @@ public class ShowActivity extends AppCompatActivity {
     backId = getIntent().getIntExtra("backId",0);
     index = getIntent().getStringExtra("index");
     paths = getPath(index);
-    for(int i = 0;i < paths.size(); i++){
-      Log.d("sjw1",paths.get(i));
-    }
-    Log.d("sjw1",backId + "");
     mViewPager = (ViewPager) findViewById(R.id.viewpager);
+    adapter = new IvAdapter(createViews(paths));
+    mViewPager.setAdapter(adapter);
+    mViewPager.setPageTransformer(true,new DepthPageTransformer());
+    mViewPager.setCurrentItem(0);
 
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        while(true) {
+          try {
+            Thread.sleep(3000);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+          runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+              mViewPager.setCurrentItem((mViewPager.getCurrentItem() + 1) % paths.size());
+            }
+          });
+        }
+      }
+    }).start();
+
+    BackgroundMusic.getInstance(this).playBackgroundMusic(MusicList.ids[backId],true);
+  }
+
+  @Override
+  protected void onStop() {
+    super.onStop();
+    BackgroundMusic.getInstance(this).end();
+  }
+
+  private List<View> createViews(List<String> paths){
+    List<View> views = new ArrayList<View>();
+    for(int i=0;i<paths.size();i++){
+      View view = LayoutInflater.from(this).inflate(R.layout.activity_show_image_item,null);
+      ImageView im = view.findViewById(R.id.show_picture);
+      //im.setImageDrawable(getDrawable(R.drawable.ic_launcher_foreground));
+      CreateGvAdpater.MyTask task = new CreateGvAdpater.MyTask();
+      task.setmIv(im);
+      task.execute(paths.get(i));
+      views.add(view);
+    }
+    Log.d("sjw2",views.size()+"");
+    return views;
   }
 
   public List<String> getPath(String index){
@@ -58,13 +100,12 @@ public class ShowActivity extends AppCompatActivity {
     return list;
   }
 
+
   public static class IvAdapter extends PagerAdapter {
 
-    private List<String> data;
-    private Context context;
+    private List<View> data;
 
-    public IvAdapter(Context context, List<String> data){
-      this.context = context;
+    public IvAdapter(List<View> data){
       this.data = data;
     }
 
@@ -75,23 +116,18 @@ public class ShowActivity extends AppCompatActivity {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-      return false;
+      return view == object;
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-      View view=LayoutInflater.from(context).inflate(R.layout.activity_show_image_item,null);
-      CreateGvAdpater.MyTask task = new CreateGvAdpater.MyTask();
-      ImageView iv = (ImageView) view.findViewById(R.id.show_picture);
-      task.setmIv(iv);
-      task.execute(data.get(position));
-      container.addView(view);
-      return view;
+      container.addView(data.get(position));
+      return data.get(position);
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-      //container.removeView(datas.get(position));
+      container.removeView(data.get(position));
     }
   }
 }

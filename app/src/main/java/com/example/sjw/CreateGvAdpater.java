@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * 创建时间：2019/4/27
- * 作者：zhangchao
+ * 作者：sjw
  * 描述：
  */
 public class CreateGvAdpater extends BaseAdapter {
