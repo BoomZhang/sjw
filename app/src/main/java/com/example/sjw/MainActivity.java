@@ -39,8 +39,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.i("sjw",data.get(position).name);
-        Log.i("sjw",data.get(position).backMusicID+"");
+        Intent intent = new Intent(MainActivity.this,ShowActivity.class);
+        intent.putExtra("index",data.get(position).index);
+        intent.putExtra("backId",data.get(position).backMusicID);
+        startActivity(intent);
       }
     });
     mBtGuide = (Button) findViewById(R.id.look_up_guide_bt);

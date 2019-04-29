@@ -5,12 +5,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.ysq.album.activity.AlbumActivity;
 import com.ysq.album.bean.ImageBean;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 /**
@@ -24,10 +27,9 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
   private Button mBtChoosePicture;
   private Button mBtChooseMusic;
   private Button mBtSave;
-  ArrayList<ImageBean> list;
   private OtherGridView mGvPictures;
   private TextView mTvMusic;
-  private ArrayList<ImageBean> datas;
+  private ArrayList<ImageBean> list;
   private CreateGvAdpater adapter;
   private int position;
   private EditText mEtName;
@@ -47,7 +49,7 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
     mBtSave = (Button) findViewById(R.id.save_bt);
     mBtSave.setOnClickListener(this);
     mEtName = (EditText) findViewById(R.id.name_input_et);
-    datas = new ArrayList<ImageBean>();
+    //list = new ArrayList<ImageBean>();
     mGvPictures = (OtherGridView) findViewById(R.id.pictures_gridview);
     //adapter = new CreateGvAdpater(this,datas);
     //mGvPictures.setAdapter(adapter);
@@ -60,7 +62,7 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
     intent.putExtra(AlbumActivity.ARG_MODE, AlbumActivity.MODE_MULTI_SELECT);
     intent.putExtra(AlbumActivity.ARG_MAX_COUNT, 8);
     Bundle bundle = new Bundle();
-    bundle.putSerializable(AlbumActivity.ARG_DATA, datas);
+    bundle.putSerializable(AlbumActivity.ARG_DATA, list);
     intent.putExtras(bundle);
     startActivityForResult(intent, 1001);
   }
@@ -95,14 +97,20 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
     if(name == null || "".equals(name)){
       return;
     }
-    String index = DateUtil.getTime();
-    String sqlVi = "INSERT INTO vi(name,backgroudID,dex) VALUES('" + name + "','" + position +"','"+ index +"')";
+    String index = null;
+    String time = DateUtil.getTime();
+    try {
+      index = new String(Base64.encode(time.getBytes("UTF-8"),1));
+    } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
+    }
+    String sqlVi = "INSERT INTO vi(name,backgroudID,dex0) VALUES('" + name + "','" + position +"','"+ index +"')";
     SQLiteDatabase db = DbManger.getIntance(this).getWritableDatabase();
     DbManger.execSQL(db,sqlVi);
 
-    for(int i = 0; i < datas.size(); i++){
-      String path = datas.get(i).getImage_path();
-      String sqlPi = "INSERT INTO pi VALUES ('"+ index +"','"+ path +"')";
+    for(int i = 0; i < list.size(); i++){
+      String path = list.get(i).getImage_path();
+      String sqlPi = "INSERT INTO pi(dex1,path) VALUES('"+ index +"','"+ path +"')";
       db.execSQL(sqlPi);
     }
     this.finish();

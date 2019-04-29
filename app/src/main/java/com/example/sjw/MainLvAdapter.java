@@ -1,11 +1,13 @@
 package com.example.sjw;
 
 import android.content.Context;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -52,7 +54,11 @@ public class MainLvAdapter extends BaseAdapter {
     }
 
     viewHolder.mTvTitle.setText(bean.name);
-    viewHolder.mTvDescrip.setText(bean.index);
+    try {
+      viewHolder.mTvDescrip.setText(new String(Base64.decode(bean.index.getBytes("UTF-8"),1)));
+    } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
+    }
 
     return convertView;
   }

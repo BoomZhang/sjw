@@ -23,4 +23,5 @@ public class GuideActivity extends AppCompatActivity {
     mWebView.setWebViewClient(new WebViewClient());
     mWebView.loadUrl("file:///android_asset/guide.html");
   }
+
 }
