@@ -1,14 +1,22 @@
 package com.example.sjw;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +24,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -37,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   protected void onResume() {
     super.onResume();
     mLv.setAdapter(createAdapter());
+    sendNotification(data.size());
   }
 
   private void initView() {
@@ -113,6 +121,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Cursor cursor =  resolver.query(uri,null,null,null,null);
     //Cursor cursor =  DbManger.selectSQL(db,all,null);
     return DbManger.toList(cursor);
+  }
+
+  private void sendNotification(int i) {
+
+    NotificationCompat.Builder notificationCompatBuilder = new NotificationCompat.Builder(this);
+    Notification notification = notificationCompatBuilder
+        .setContentTitle("sjw")
+        .setContentText("ListView has " + i + " items")
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setSmallIcon(R.mipmap.ic_launcher)
+        .build();
+
+    NotificationManagerCompat.from(getApplicationContext()).notify(1, notification);
+
   }
 
 
