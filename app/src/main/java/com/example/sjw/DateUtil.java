@@ -13,7 +13,7 @@ public final class DateUtil {
   public static String getTime(){
     long time = System.currentTimeMillis();
     Date date = new Date(time);
-    SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒 EEEE");
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String data = format.format(date);
     return data;
   }

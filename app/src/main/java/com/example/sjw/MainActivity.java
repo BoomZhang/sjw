@@ -1,8 +1,13 @@
 package com.example.sjw;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -45,10 +51,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
       }
     });
+    mLv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+      @Override
+      public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        showAction(data.get(position).index);
+        return true;
+      }
+    });
     mBtGuide = (Button) findViewById(R.id.look_up_guide_bt);
     mBtGuide.setOnClickListener(this);
     mBtCreate = (Button) findViewById(R.id.create_music_ablum_bt);
     mBtCreate.setOnClickListener(this);
+
+  }
+
+  private void showAction(final String dex) {
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setMessage("Select the action you want to perform");
+    builder.setPositiveButton("delete", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        //Toast.makeText(getApplicationContext(),"delete",Toast.LENGTH_SHORT).show();
+        SQLiteDatabase db = DbManger.getIntance(getApplicationContext()).getWritableDatabase();
+        DbManger.deleteOne(db,dex);
+        mLv.setAdapter(createAdapter());
+      }
+    }).setNegativeButton("edit", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        //Toast.makeText(getApplicationContext(),"edit",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this,CreateActivity.class);
+        intent.putExtra("dex",dex);
+        startActivity(intent);
+      }
+    }).show();
+
   }
 
   private BaseAdapter createAdapter(){
@@ -70,9 +108,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   }
 
   private List<ViBean> createData(){
-    SQLiteDatabase db = DbManger.getIntance(this).getWritableDatabase();
-    String all = "select * from vi";
-    Cursor cursor =  DbManger.selectSQL(db,all,null);
+    Uri uri = Uri.parse("content://com.example.sjw.mycontentprovider/get");
+    ContentResolver resolver = getContentResolver();
+    Cursor cursor =  resolver.query(uri,null,null,null,null);
+    //Cursor cursor =  DbManger.selectSQL(db,all,null);
     return DbManger.toList(cursor);
   }
 

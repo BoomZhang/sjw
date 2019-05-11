@@ -34,6 +34,11 @@ public class DbManger {
         }
     }
 
+    public static void deleteOne(SQLiteDatabase db, String dex){
+      String sql = "delete from vi where dex0=" + "\'" + dex+ "\'";
+      db.execSQL(sql);
+    }
+
     /**
      * 对数据库的查询操作吗，获得一个Cursor对象
      * @param db

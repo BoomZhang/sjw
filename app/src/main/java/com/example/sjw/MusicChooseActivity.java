@@ -37,6 +37,15 @@ public class MusicChooseActivity extends AppCompatActivity implements View.OnCli
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_music_choose_layout);
     initView();
+    if(savedInstanceState != null){
+      int position = savedInstanceState.getInt("position");
+      mTvHasChoose.setVisibility(View.VISIBLE);
+      mTvHasChoose.setText("Already selected \"" + MusicList.names[position]+"\"");
+      pos = position;
+      ID = MusicList.ids[position];
+      mBtStart.setText(R.string.start);
+      STARTING = false;
+    }
   }
 
   private void initView() {
@@ -52,7 +61,7 @@ public class MusicChooseActivity extends AppCompatActivity implements View.OnCli
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mTvHasChoose.setVisibility(View.VISIBLE);
-        mTvHasChoose.setText("已选择《" + MusicList.names[position]+"》");
+        mTvHasChoose.setText("Already selected \"" + MusicList.names[position]+"\"");
         pos = position;
         ID = MusicList.ids[position];
         mBtStart.setText(R.string.start);
@@ -62,16 +71,20 @@ public class MusicChooseActivity extends AppCompatActivity implements View.OnCli
   }
 
   @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    outState.putInt("position",pos);
+    super.onSaveInstanceState(outState);
+  }
+
+  @Override
   public void onClick(View v) {
 
     if(v.getId() == R.id.start_and_stop_bt){
       if(!STARTING){
-        Log.i("sjw","sss");
         BackgroundMusic.getInstance(this).playBackgroundMusic(ID,true);
         mBtStart.setText(R.string.stop);
         STARTING = true;
       }else{
-        Log.i("sjw","ttt");
         BackgroundMusic.getInstance(this).end();
         mBtStart.setText(R.string.start);
         STARTING = false;
@@ -91,7 +104,7 @@ public class MusicChooseActivity extends AppCompatActivity implements View.OnCli
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    //BackgroundMusic.getInstance(this).end();
+    BackgroundMusic.getInstance(this).end();
   }
 
   public static class MusicListAdapter extends BaseAdapter {

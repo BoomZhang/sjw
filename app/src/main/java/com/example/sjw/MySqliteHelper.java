@@ -21,8 +21,8 @@ public class MySqliteHelper extends SQLiteOpenHelper {
   @Override
   public void onCreate(SQLiteDatabase db) {
     //可以在这里写SQL语句，需要创建的表可以全部在这里先创建好
-    String sqlCreateTableVi = "create table vi (id Integer primary key autoincrement,name varchar(50),backgroudID Integer,dex0 varchar(50))";
-    String sqlCreateTablePi = "create table pi (id Integer primary key autoincrement,dex1 varchar(50), path varchar(100))";
+    String sqlCreateTableVi = "create table vi (id Integer primary key autoincrement,name varchar(50),backgroudID Integer,dex0 TEXT)";
+    String sqlCreateTablePi = "create table pi (id Integer primary key autoincrement,dex1 TEXT, path varchar(100))";
     db.execSQL(sqlCreateTablePi);
     db.execSQL(sqlCreateTableVi);
   }

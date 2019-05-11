@@ -78,7 +78,7 @@ public class ShowActivity extends AppCompatActivity {
     List<View> views = new ArrayList<View>();
     for(int i=0;i<paths.size();i++){
       View view = LayoutInflater.from(this).inflate(R.layout.activity_show_image_item,null);
-      ImageView im = view.findViewById(R.id.show_picture);
+      ImageView im = (ImageView) view.findViewById(R.id.show_picture);
       //im.setImageDrawable(getDrawable(R.drawable.ic_launcher_foreground));
       CreateGvAdpater.MyTask task = new CreateGvAdpater.MyTask();
       task.setmIv(im);

@@ -1,12 +1,12 @@
 <resources>
-  <string name="app_name">sjw</string>
-  <string name="user_guide">用户指南</string>
-  <string name="create">新建</string>
-  <string name="look_for_pictures">查找照片</string>
-  <string name="choose_background_music">选择背景音乐</string>
-  <string name="save">保存</string>
+  <string name="app_name">Music Album</string>
+  <string name="user_guide">Introduction</string>
+  <string name="create">New</string>
+  <string name="look_for_pictures">Photo</string>
+  <string name="choose_background_music">Music</string>
+  <string name="save">Save</string>
   <string name="picture_select_num" formatted="false">选中%d张</string>
-  <string name="start">播放</string>
-  <string name="stop">停止</string>
-  <string name="input_name">请输入相册名称</string>
+  <string name="start">Play</string>
+  <string name="stop">Pause</string>
+  <string name="input_name">Gallery Name</string>
 </resources>

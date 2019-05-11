@@ -69,8 +69,8 @@ public class MainLvAdapter extends BaseAdapter {
     public TextView mTvDescrip;
 
     public ViewHolder(View view){
-      mTvTitle = view.findViewById(R.id.title);
-      mTvDescrip = view.findViewById(R.id.descrip);
+      mTvTitle = (TextView) view.findViewById(R.id.title);
+      mTvDescrip = (TextView) view.findViewById(R.id.descrip);
     }
 
   }
