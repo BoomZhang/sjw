@@ -9,14 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 
 import static com.example.sjw.CreateActivity.getRealFilePath;
 
 /**
  * 创建时间：2019/5/12
- * 作者：zhangchao
+ * 作者：sjw
  * 描述：
  */
 public class ShareActivity extends AppCompatActivity {

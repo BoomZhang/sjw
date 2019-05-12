@@ -6,7 +6,7 @@ import android.os.IBinder;
 
 /**
  * 创建时间：2019/5/11
- * 作者：zhangchao
+ * 作者：sjw
  * 描述：
  */
 public class MusicService extends Service {
