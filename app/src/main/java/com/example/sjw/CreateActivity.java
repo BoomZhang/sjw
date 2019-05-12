@@ -17,7 +17,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,7 +27,6 @@ import android.widget.Toast;
 import com.ysq.album.activity.AlbumActivity;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 创建时间：2019/4/26
@@ -47,6 +45,7 @@ public class CreateActivity extends Activity implements View.OnClickListener{
   private int position = -1;
   private EditText mEtName;
   private String dex;
+  private ArrayList<Uri> uris = new ArrayList<Uri>();
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,9 +107,9 @@ public class CreateActivity extends Activity implements View.OnClickListener{
     mGvPictures = (OtherGridView) findViewById(R.id.pictures_gridview);
     adapter = new CreateGvAdpater(this,list);
     mGvPictures.setAdapter(adapter);
-    mGvPictures.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    mGvPictures.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
       @Override
-      public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+      public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(CreateActivity.this);
         builder.setMessage("Do you want to delete this photo?")
             .setPositiveButton("delete", new DialogInterface.OnClickListener() {
@@ -125,6 +124,15 @@ public class CreateActivity extends Activity implements View.OnClickListener{
 
           }
         }).show();
+        return true;
+      }
+    });
+    mGvPictures.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+        Intent intent = new Intent(CreateActivity.this,ShareActivity.class);
+        intent.putExtra("path",uris.get(position).toString());
+        startActivity(intent);
       }
     });
 
@@ -189,6 +197,7 @@ public class CreateActivity extends Activity implements View.OnClickListener{
       mTvMusic.setText("Already selected \"" + MusicList.names[position]+"\"");
     }else if(requestCode == 202 && resultCode == RESULT_OK){
       Uri uri = data.getData();
+      uris.add(uri);
       String path = getRealFilePath(this,uri);
       //ImageBean imageBean = new ImageBean();
       //imageBean.setImage_name("za");

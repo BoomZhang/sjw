@@ -85,7 +85,6 @@ public class ShowActivity extends AppCompatActivity {
       task.execute(paths.get(i));
       views.add(view);
     }
-    Log.d("sjw2",views.size()+"");
     return views;
   }
 
