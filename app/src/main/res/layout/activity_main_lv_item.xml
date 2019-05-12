@@ -6,30 +6,42 @@
   android:paddingLeft="20dp"
   android:paddingRight="20dp">
 
+  <ImageView
+    android:id="@+id/image"
+    android:layout_width="100dp"
+    android:layout_height="80dp"
+    android:layout_marginTop="20dp"
+    android:scaleType="fitXY"
+    android:src="@drawable/ic_launcher_background"/>
+
   <TextView
     android:id="@+id/title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
+    android:layout_toRightOf="@+id/image"
+    android:layout_marginLeft="15dp"
     android:layout_marginTop="20dp"
+    android:textSize="25sp"
+    android:textColor="@color/thirdTextBlack"
     tools:text="音乐相册文件名"/>
 
   <TextView
     android:id="@+id/descrip"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
     android:ellipsize="end"
     android:maxLines="1"
     android:layout_below="@+id/title"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="10dp"
+    android:layout_toRightOf="@+id/image"
+    android:layout_marginLeft="15dp"
     tools:text="音乐文件描述"/>
 
   <View
     android:layout_width="match_parent"
     android:layout_height="1dp"
     android:background="@android:color/holo_blue_dark"
-    android:layout_below="@+id/descrip"
+    android:layout_below="@+id/image"
     android:layout_marginTop="15dp"/>
 
 </RelativeLayout>

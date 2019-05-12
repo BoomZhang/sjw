@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     NotificationCompat.Builder notificationCompatBuilder = new NotificationCompat.Builder(this);
     Notification notification = notificationCompatBuilder
-        .setContentTitle("sjw")
+        .setContentTitle(getString(R.string.app_name))
         .setContentText("ListView has " + i + " items")
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         .setSmallIcon(R.mipmap.ic_launcher)

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -60,6 +61,10 @@ public class MainLvAdapter extends BaseAdapter {
       e.printStackTrace();
     }
 
+    CreateGvAdpater.MyTask task = new CreateGvAdpater.MyTask();
+    task.setmIv(viewHolder.mImView);
+    task.execute(bean.path);
+
     return convertView;
   }
 
@@ -67,10 +72,12 @@ public class MainLvAdapter extends BaseAdapter {
 
     public TextView mTvTitle;
     public TextView mTvDescrip;
+    public ImageView mImView;
 
     public ViewHolder(View view){
       mTvTitle = (TextView) view.findViewById(R.id.title);
       mTvDescrip = (TextView) view.findViewById(R.id.descrip);
+      mImView = (ImageView) view.findViewById(R.id.image);
     }
 
   }

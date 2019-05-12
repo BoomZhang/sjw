@@ -224,7 +224,7 @@ public class CreateActivity extends Activity implements View.OnClickListener{
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
-    String sqlVi = "INSERT INTO vi(name,backgroudID,dex0) VALUES('" + name + "','" + position +"','"+ index +"')";
+    String sqlVi = "INSERT INTO vi(name,backgroudID,dex0,path) VALUES('" + name + "','" + position +"','"+ index +"','"+list.get(0)+"')";
     SQLiteDatabase db = DbManger.getIntance(this).getWritableDatabase();
     DbManger.execSQL(db,sqlVi);
 

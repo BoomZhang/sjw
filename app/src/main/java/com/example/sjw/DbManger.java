@@ -60,7 +60,7 @@ public class DbManger {
       while(cursor.moveToNext()){
         int columnIndex = cursor.getColumnIndex("id");
         list.add(new ViBean(cursor.getString(1),
-            cursor.getInt(2),cursor.getString(3)));
+            cursor.getInt(2),cursor.getString(3),cursor.getString(4)));
       }
       return list;
     }

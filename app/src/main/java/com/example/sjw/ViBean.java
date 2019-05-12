@@ -10,10 +10,12 @@ public class ViBean {
   public String name;
   public int backMusicID;
   public String index;
+  public String path;
 
-  public ViBean(String name, int backMusicID, String index) {
+  public ViBean(String name, int backMusicID, String index, String path) {
     this.name = name;
     this.backMusicID = backMusicID;
     this.index = index;
+    this.path = path;
   }
 }
